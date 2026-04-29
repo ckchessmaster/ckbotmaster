@@ -1,0 +1,71 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/CkBotMaster.slnx",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "problemMatcher": "$msCompile",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "build-apphost",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/CkBotMaster.AppHost/CkBotMaster.AppHost.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-auditbot",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/CkBotMaster.AuditBot/CkBotMaster.AuditBot.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "test",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "test",
+        "${workspaceFolder}/CkBotMaster.slnx",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
+      ],
+      "problemMatcher": "$msCompile",
+      "group": "test"
+    },
+    {
+      "label": "watch-apphost",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "--project",
+        "${workspaceFolder}/src/CkBotMaster.AppHost/CkBotMaster.AppHost.csproj"
+      ],
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CkBotMaster.AppHost/CkBotMaster.AppHost.csproj" />
+    <Project Path="src/CkBotMaster.AuditBot/CkBotMaster.AuditBot.csproj" />
+    <Project Path="src/CkBotMaster.ServiceDefaults/CkBotMaster.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CkBotMaster.AuditBot.Tests/CkBotMaster.AuditBot.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run AppHost (Aspire, recommended)",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/CkBotMaster.AppHost/CkBotMaster.AppHost.csproj",
+      "launchConfigurationId": "https",
+      "preLaunchTask": "build-apphost"
+    },
+    {
+      "name": "Run AppHost (Aspire, http)",
+      "type": "dotnet",
+      "request": "launch",
+      "projectPath": "${workspaceFolder}/src/CkBotMaster.AppHost/CkBotMaster.AppHost.csproj",
+      "launchConfigurationId": "http",
+      "preLaunchTask": "build-apphost"
+    },
+    {
+      "name": "Run AuditBot directly (no Aspire)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-auditbot",
+      "program": "${workspaceFolder}/src/CkBotMaster.AuditBot/bin/Debug/net10.0/CkBotMaster.AuditBot.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/CkBotMaster.AuditBot",
+      "console": "internalConsole",
+      "stopAtEntry": false,
+      "env": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.2.4">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>ad112aba-29d2-4f3a-a235-2e7cffb45cd2</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="13.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CkBotMaster.AuditBot\CkBotMaster.AuditBot.csproj" />
+  </ItemGroup>
+
+</Project>

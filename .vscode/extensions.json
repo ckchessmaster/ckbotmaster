@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-azuretools.vscode-containers",
+    "ms-azuretools.vscode-bicep",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "redhat.vscode-yaml"
+  ]
+}
