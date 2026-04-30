@@ -25,10 +25,6 @@ RUN dotnet publish src/CkBotMaster.AuditBot/CkBotMaster.AuditBot.csproj \
 FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VERSION} AS runtime
 WORKDIR /app
 
-# Run as non-root.
-RUN groupadd --system --gid 1000 app \
- && useradd --system --uid 1000 --gid app --no-create-home --shell /usr/sbin/nologin app
-
 COPY --from=build /app/publish ./
 
 ENV DOTNET_RUNNING_IN_CONTAINER=true \

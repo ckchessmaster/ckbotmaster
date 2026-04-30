@@ -1,0 +1,9 @@
+**/.git
+**/.vscode
+**/.github
+**/bin
+**/obj
+**/node_modules
+deploy/k8s
+README.md
+LICENSE
