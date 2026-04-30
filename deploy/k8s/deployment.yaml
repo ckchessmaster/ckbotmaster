@@ -45,7 +45,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: auditbot
-          image: ghcr.io/your-org/ckbotmaster-auditbot:latest
+          image: ghcr.io/ckchessmaster/ckbotmaster-auditbot:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

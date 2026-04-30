@@ -75,7 +75,7 @@ dotnet test
 ## Build the container
 
 ```powershell
-docker build -f deploy/Dockerfile -t ghcr.io/your-org/ckbotmaster-auditbot:latest .
+docker build -f deploy/Dockerfile -t ghcr.io/ckchessmaster/ckbotmaster-auditbot:latest .
 ```
 
 ## Deploy to Kubernetes
