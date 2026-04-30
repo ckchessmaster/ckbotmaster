@@ -6,7 +6,7 @@ WORKDIR /src
 
 # Copy solution + project files first for layer-cached restore.
 COPY Directory.Build.props ./
-COPY CkBotMaster.sln ./
+COPY CkBotMaster.slnx ./
 COPY src/CkBotMaster.AuditBot/CkBotMaster.AuditBot.csproj src/CkBotMaster.AuditBot/
 COPY src/CkBotMaster.ServiceDefaults/CkBotMaster.ServiceDefaults.csproj src/CkBotMaster.ServiceDefaults/
 
