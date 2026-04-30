@@ -51,6 +51,17 @@ public sealed class BotOptions
     ];
 
     /// <summary>
+    /// Audit log action types to completely ignore (not posted to the audit channel at all).
+    /// Values must parse to <see cref="ActionType"/> members.
+    /// </summary>
+    public string[] ExcludedEventTypes { get; set; } =
+    [
+        nameof(ActionType.VoiceChannelStatusUpdated),
+        nameof(ActionType.VoiceChannelStatusDeleted),
+        nameof(ActionType.ThreadCreate)
+    ];
+
+    /// <summary>
     /// On startup, scan recent messages in the audit channel and delete
     /// any non-bot messages that are not associated with an open prompt.
     /// </summary>

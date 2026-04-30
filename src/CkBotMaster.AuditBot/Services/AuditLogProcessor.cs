@@ -26,6 +26,13 @@ public sealed class AuditLogProcessor(
 
     public async Task ProcessAsync(IAuditLogEntry entry, bool fromCatchup, CancellationToken ct)
     {
+        // Skip excluded event types entirely.
+        if (IsExcluded(entry.Action))
+        {
+            logger.LogDebug("Audit entry {EntryId} action {Action} is excluded; skipping.", entry.Id, entry.Action);
+            return;
+        }
+
         // Idempotency: skip already-processed entries (covers gateway-redelivery and catch-up overlap).
         if (await db.AuditEntries.AnyAsync(e => e.DiscordEntryId == entry.Id, ct))
         {
@@ -40,7 +47,7 @@ public sealed class AuditLogProcessor(
             return;
         }
 
-        var embed = embedBuilder.Build(entry, fromCatchup);
+        var embed = embedBuilder.Build(entry, fromCatchup, client);
         var posted = await channel.SendMessageAsync(embed: embed, options: new RequestOptions { CancelToken = ct });
 
         var stored = new AuditEntry
@@ -99,6 +106,19 @@ public sealed class AuditLogProcessor(
     {
         var name = action.ToString();
         foreach (var configured in _options.MajorEventTypes)
+        {
+            if (string.Equals(configured, name, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsExcluded(ActionType action)
+    {
+        var name = action.ToString();
+        foreach (var configured in _options.ExcludedEventTypes)
         {
             if (string.Equals(configured, name, StringComparison.OrdinalIgnoreCase))
             {

@@ -42,6 +42,7 @@ Configuration is bound from the `Bot` section of `appsettings.json` plus environ
 | `Bot:ReasonTimeoutHours` | Hours before an unanswered prompt times out | `24` |
 | `Bot:PromptMode` | `DmThenMention`, `DmOnly`, or `MentionOnly` | `DmThenMention` |
 | `Bot:MajorEventTypes` | List of `ActionType` names that trigger a reason prompt | sensible defaults (Ban, Kick, role/channel/perm changes…) |
+| `Bot:ExcludedEventTypes` | List of `ActionType` names to completely ignore (not posted) | VoiceChannelStatusUpdated/Deleted, Thread*, Stage* |
 | `Bot:CleanChannelOnStartup` | Sweep the audit channel for stale non-bot messages on startup | `true` |
 | `ConnectionStrings:auditdb` | PostgreSQL connection string | _injected by Aspire locally; secret in K8s_ |
 

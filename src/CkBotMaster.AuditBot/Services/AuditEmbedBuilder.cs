@@ -1,4 +1,5 @@
 using Discord;
+using Discord.WebSocket;
 
 namespace CkBotMaster.AuditBot.Services;
 
@@ -12,7 +13,7 @@ public sealed class AuditEmbedBuilder
     /// <summary>
     /// Builds the initial embed posted when the bot first sees an audit entry.
     /// </summary>
-    public Embed Build(IAuditLogEntry entry, bool fromCatchup)
+    public Embed Build(IAuditLogEntry entry, bool fromCatchup, DiscordSocketClient? client = null)
     {
         var actorMention = entry.User is null ? "*unknown*" : $"<@{entry.User.Id}>";
 
@@ -23,6 +24,16 @@ public sealed class AuditEmbedBuilder
             .AddField("Actor", actorMention, inline: true)
             .AddField("Action", entry.Action.ToString(), inline: true)
             .WithFooter($"Audit entry {entry.Id}{(fromCatchup ? " · captured during catch-up" : string.Empty)}");
+
+        // Add detail fields from the audit log data object.
+        if (client is not null)
+        {
+            var details = AuditEntryDetailExtractor.Extract(entry, client);
+            foreach (var (label, value) in details)
+            {
+                builder.AddField(label, Truncate(value, 1024), inline: true);
+            }
+        }
 
         if (!string.IsNullOrWhiteSpace(entry.Reason))
         {
