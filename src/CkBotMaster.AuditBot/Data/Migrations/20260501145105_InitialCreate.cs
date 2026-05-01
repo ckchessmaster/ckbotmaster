@@ -12,8 +12,12 @@ namespace CkBotMaster.AuditBot.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "ckbotmaster");
+
             migrationBuilder.CreateTable(
                 name: "audit_entries",
+                schema: "ckbotmaster",
                 columns: table => new
                 {
                     DiscordEntryId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
@@ -33,6 +37,7 @@ namespace CkBotMaster.AuditBot.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "bot_state",
+                schema: "ckbotmaster",
                 columns: table => new
                 {
                     Key = table.Column<string>(type: "character varying(64)", maxLength: 64, nullable: false),
@@ -45,6 +50,7 @@ namespace CkBotMaster.AuditBot.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "pending_reasons",
+                schema: "ckbotmaster",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -64,6 +70,7 @@ namespace CkBotMaster.AuditBot.Data.Migrations
                     table.ForeignKey(
                         name: "FK_pending_reasons_audit_entries_AuditEntryId",
                         column: x => x.AuditEntryId,
+                        principalSchema: "ckbotmaster",
                         principalTable: "audit_entries",
                         principalColumn: "DiscordEntryId",
                         onDelete: ReferentialAction.Cascade);
@@ -71,21 +78,25 @@ namespace CkBotMaster.AuditBot.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_audit_entries_CreatedAt",
+                schema: "ckbotmaster",
                 table: "audit_entries",
                 column: "CreatedAt");
 
             migrationBuilder.CreateIndex(
                 name: "IX_pending_reasons_ActorId_IsOpen",
+                schema: "ckbotmaster",
                 table: "pending_reasons",
                 columns: new[] { "ActorId", "IsOpen" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_pending_reasons_AuditEntryId",
+                schema: "ckbotmaster",
                 table: "pending_reasons",
                 column: "AuditEntryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_pending_reasons_IsOpen_ExpiresAt",
+                schema: "ckbotmaster",
                 table: "pending_reasons",
                 columns: new[] { "IsOpen", "ExpiresAt" });
         }
@@ -94,13 +105,16 @@ namespace CkBotMaster.AuditBot.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "bot_state");
+                name: "bot_state",
+                schema: "ckbotmaster");
 
             migrationBuilder.DropTable(
-                name: "pending_reasons");
+                name: "pending_reasons",
+                schema: "ckbotmaster");
 
             migrationBuilder.DropTable(
-                name: "audit_entries");
+                name: "audit_entries",
+                schema: "ckbotmaster");
         }
     }
 }

@@ -58,7 +58,11 @@ public sealed class BotOptions
     [
         nameof(ActionType.VoiceChannelStatusUpdated),
         nameof(ActionType.VoiceChannelStatusDeleted),
-        nameof(ActionType.ThreadCreate)
+        nameof(ActionType.ThreadCreate),
+        nameof(ActionType.ThreadUpdate),
+        nameof(ActionType.InviteCreated),
+        nameof(ActionType.InviteDeleted),
+        nameof(ActionType.InviteUpdated),
     ];
 
     /// <summary>

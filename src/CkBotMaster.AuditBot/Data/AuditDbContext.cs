@@ -13,6 +13,8 @@ public sealed class AuditDbContext(DbContextOptions<AuditDbContext> options) : D
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.HasDefaultSchema("ckbotmaster");
+
         modelBuilder.Entity<AuditEntry>(b =>
         {
             b.ToTable("audit_entries");

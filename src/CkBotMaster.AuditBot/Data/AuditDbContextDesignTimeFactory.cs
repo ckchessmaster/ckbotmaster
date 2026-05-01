@@ -12,7 +12,7 @@ public sealed class AuditDbContextDesignTimeFactory : IDesignTimeDbContextFactor
     public AuditDbContext CreateDbContext(string[] args)
     {
         var options = new DbContextOptionsBuilder<AuditDbContext>()
-            .UseNpgsql("Host=localhost;Database=auditdb;Username=postgres;Password=postgres")
+            .UseNpgsql("Host=localhost;Database=app;Username=hive;Password=postgres;Search Path=ckbotmaster")
             .Options;
         return new AuditDbContext(options);
     }

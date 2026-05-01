@@ -3,6 +3,7 @@ using System;
 using CkBotMaster.AuditBot.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,13 +12,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CkBotMaster.AuditBot.Data.Migrations
 {
     [DbContext(typeof(AuditDbContext))]
-    partial class AuditDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260501144908_AddCkbotmasterSchema")]
+    partial class AddCkbotmasterSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("ckbotmaster")
                 .HasAnnotation("ProductVersion", "10.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -59,7 +61,7 @@ namespace CkBotMaster.AuditBot.Data.Migrations
 
                     b.HasIndex("CreatedAt");
 
-                    b.ToTable("audit_entries", "ckbotmaster");
+                    b.ToTable("audit_entries", (string)null);
                 });
 
             modelBuilder.Entity("CkBotMaster.AuditBot.Data.Entities.BotState", b =>
@@ -75,7 +77,7 @@ namespace CkBotMaster.AuditBot.Data.Migrations
 
                     b.HasKey("Key");
 
-                    b.ToTable("bot_state", "ckbotmaster");
+                    b.ToTable("bot_state", (string)null);
                 });
 
             modelBuilder.Entity("CkBotMaster.AuditBot.Data.Entities.PendingReason", b =>
@@ -118,7 +120,7 @@ namespace CkBotMaster.AuditBot.Data.Migrations
 
                     b.HasIndex("IsOpen", "ExpiresAt");
 
-                    b.ToTable("pending_reasons", "ckbotmaster");
+                    b.ToTable("pending_reasons", (string)null);
                 });
 
             modelBuilder.Entity("CkBotMaster.AuditBot.Data.Entities.PendingReason", b =>
