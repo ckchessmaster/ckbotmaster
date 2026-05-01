@@ -46,7 +46,7 @@ spec:
       containers:
         - name: auditbot
           image: ghcr.io/ckchessmaster/ckbotmaster-auditbot:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 8080
