@@ -6,7 +6,7 @@ using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
-var builder = Host.CreateApplicationBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
@@ -50,16 +50,20 @@ builder.Services.AddHostedService<AuditLogQueueConsumer>();
 builder.Services.AddHostedService<ReasonTimeoutWorker>();
 builder.Services.AddHostedService<DiscordHostedService>();
 
-var host = builder.Build();
+var app = builder.Build();
+
+app.UseRequestTimeouts();
+app.UseOutputCache();
+app.MapDefaultEndpoints();
 
 // Apply pending migrations on startup.
-using (var scope = host.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AuditDbContext>();
     await db.Database.MigrateAsync();
 }
 
 // Force options validation now so misconfiguration fails fast before Discord login.
-_ = host.Services.GetRequiredService<IOptions<BotOptions>>().Value;
+_ = app.Services.GetRequiredService<IOptions<BotOptions>>().Value;
 
-await host.RunAsync();
+await app.RunAsync();
