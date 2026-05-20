@@ -59,6 +59,8 @@ docker build -f deploy/Dockerfile -t ckbotmaster-auditbot:latest .
 ### Testing Practices
 - **Framework:** xUnit.
 - **Mocking:** [NSubstitute](https://nsubstitute.github.io/) is used for creating fakes/mocks (see `tests/CkBotMaster.AuditBot.Tests/Fakes.cs`).
+- **Mandatory Coverage:** All new business logic or bug fixes **must** be accompanied by unit tests. If a service is difficult to test, consider refactoring it for better testability (e.g., using interfaces or wrappers for external dependencies like Discord.Net).
+- **Mutation Testing:** When writing new tests, you **must** perform mutation testing. Manually introduce a breaking change into the business logic to verify that the corresponding test fails as expected. This confirms the test is providing high-signal validation.
 - **Patterns:** Tests follow the AAA (Arrange, Act, Assert) pattern and focus on unit testing service logic (e.g., `AuditEmbedBuilderTests`).
 
 ### Architecture Patterns
