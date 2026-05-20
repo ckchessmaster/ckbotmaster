@@ -29,6 +29,8 @@ public sealed class DiscordHostedService(
         client.Ready += OnReadyAsync;
         client.AuditLogCreated += OnAuditLogCreatedAsync;
         client.MessageReceived += OnMessageReceivedAsync;
+        client.MessageDeleted += OnMessageDeletedAsync;
+        client.MessagesBulkDeleted += OnMessagesBulkDeletedAsync;
 
         await client.LoginAsync(TokenType.Bot, _options.Token);
         await client.StartAsync();
@@ -38,6 +40,13 @@ public sealed class DiscordHostedService(
     {
         try
         {
+            client.Log -= LogAsync;
+            client.Ready -= OnReadyAsync;
+            client.AuditLogCreated -= OnAuditLogCreatedAsync;
+            client.MessageReceived -= OnMessageReceivedAsync;
+            client.MessageDeleted -= OnMessageDeletedAsync;
+            client.MessagesBulkDeleted -= OnMessagesBulkDeletedAsync;
+
             await client.StopAsync();
             await client.LogoutAsync();
         }
@@ -130,6 +139,47 @@ public sealed class DiscordHostedService(
         catch (Exception ex)
         {
             logger.LogError(ex, "Failed to handle message {MessageId}.", message.Id);
+        }
+    }
+
+    private async Task OnMessageDeletedAsync(Cacheable<IMessage, ulong> message, Cacheable<IMessageChannel, ulong> channel)
+    {
+        if (channel.Id != _options.AuditChannelId)
+        {
+            return;
+        }
+
+        try
+        {
+            using var scope = scopeFactory.CreateScope();
+            var processor = scope.ServiceProvider.GetRequiredService<AuditLogProcessor>();
+            await processor.RestoreAsync(channel.Id, message.Id, lifetime.ApplicationStopping);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to restore deleted message {MessageId}.", message.Id);
+        }
+    }
+
+    private async Task OnMessagesBulkDeletedAsync(IReadOnlyCollection<Cacheable<IMessage, ulong>> messages, Cacheable<IMessageChannel, ulong> channel)
+    {
+        if (channel.Id != _options.AuditChannelId)
+        {
+            return;
+        }
+
+        try
+        {
+            using var scope = scopeFactory.CreateScope();
+            var processor = scope.ServiceProvider.GetRequiredService<AuditLogProcessor>();
+            foreach (var message in messages)
+            {
+                await processor.RestoreAsync(channel.Id, message.Id, lifetime.ApplicationStopping);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to handle bulk message deletion in channel {ChannelId}.", channel.Id);
         }
     }
 }

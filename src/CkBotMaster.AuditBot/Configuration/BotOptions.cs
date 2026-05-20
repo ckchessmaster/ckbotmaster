@@ -63,6 +63,7 @@ public sealed class BotOptions
         nameof(ActionType.InviteCreated),
         nameof(ActionType.InviteDeleted),
         nameof(ActionType.InviteUpdated),
+        nameof(ActionType.MemberMoved)
     ];
 
     /// <summary>

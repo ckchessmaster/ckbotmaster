@@ -23,6 +23,7 @@ public sealed class AuditDbContext(DbContextOptions<AuditDbContext> options) : D
             b.Property(e => e.ActionType).HasMaxLength(64).IsRequired();
             b.Property(e => e.ReasonText).HasMaxLength(2000);
             b.HasIndex(e => e.CreatedAt);
+            b.HasIndex(e => e.MessageId);
         });
 
         modelBuilder.Entity<PendingReason>(b =>
